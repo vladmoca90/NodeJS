@@ -1,0 +1,62 @@
+const express = require("express");
+const router = express.Router();
+
+const europeanCountries = [
+  { countryName: "Albania", countryCapital: "Tirana", CountrySize: 28748, countryPopulation: 2862427 },
+  { countryName: "Andorra", countryCapital: "Andorra la Vella", CountrySize: 468, countryPopulation: 78324 },
+  { countryName: "Armenia", countryCapital: "Yerevan", CountrySize: 29743, countryPopulation: 2981000 },
+  { countryName: "Austria", countryCapital: "Vienna", CountrySize: 83871, countryPopulation: 9006398 },
+  { countryName: "Azerbaijan", countryCapital: "Baku", CountrySize: 86600, countryPopulation: 10404458 },
+  { countryName: "Belarus", countryCapital: "Minsk", CountrySize: 207600, countryPopulation: 9398861 },
+  { countryName: "Belgium", countryCapital: "Brussels", CountrySize: 30528, countryPopulation: 11589623 },
+  { countryName: "Bosnia and Herzegovina", countryCapital: "Sarajevo", CountrySize: 51197, countryPopulation: 3280815 },
+  { countryName: "Bulgaria", countryCapital: "Sofia", CountrySize: 110994, countryPopulation: 6948445 },
+  { countryName: "Croatia", countryCapital: "Zagreb", CountrySize: 56594, countryPopulation: 3899139 },
+  { countryName: "Cyprus", countryCapital: "Nicosia", CountrySize: 9251, countryPopulation: 1215352 },
+  { countryName: "Czech Republic", countryCapital: "Prague", CountrySize: 78865, countryPopulation: 10701777 },
+  { countryName: "Denmark", countryCapital: "Copenhagen", CountrySize: 43094, countryPopulation: 5831404 },
+  { countryName: "Estonia", countryCapital: "Tallinn", CountrySize: 45227, countryPopulation: 1367960 },
+  { countryName: "Finland", countryCapital: "Helsinki", CountrySize: 338424, countryPopulation: 5536146 },
+  { countryName: "France", countryCapital: "Paris", CountrySize: 551695, countryPopulation: 67348000 },
+  { countryName: "Georgia", countryCapital: "Tbilisi", CountrySize: 69700, countryPopulation: 3714000 },
+  { countryName: "Germany", countryCapital: "Berlin", CountrySize: 357386, countryPopulation: 83240525 },
+  { countryName: "Greece", countryCapital: "Athens", CountrySize: 131957, countryPopulation: 10724599 },
+  { countryName: "Hungary", countryCapital: "Budapest", CountrySize: 93028, countryPopulation: 9725000 },
+  { countryName: "Iceland", countryCapital: "Reykjavik", CountrySize: 103000, countryPopulation: 377025 },
+  { countryName: "Ireland", countryCapital: "Dublin", CountrySize: 70273, countryPopulation: 4994724 },
+  { countryName: "Italy", countryCapital: "Rome", CountrySize: 301340, countryPopulation: 59554023 },
+  { countryName: "Kazakhstan", countryCapital: "Astana", CountrySize: 2724900, countryPopulation: 18776707 },
+  { countryName: "Kosovo", countryCapital: "Pristina", CountrySize: 10887, countryPopulation: 1831000 },
+  { countryName: "Latvia", countryCapital: "Riga", CountrySize: 64589, countryPopulation: 1906800 },
+  { countryName: "Liechtenstein", countryCapital: "Vaduz", CountrySize: 160, countryPopulation: 39284 },
+  { countryName: "Lithuania", countryCapital: "Vilnius", CountrySize: 65300, countryPopulation: 2794700 },
+  { countryName: "Luxembourg", countryCapital: "Luxembourg", CountrySize: 2586, countryPopulation: 644914 },
+  { countryName: "Malta", countryCapital: "Valletta", CountrySize: 316, countryPopulation: 516100 },
+  { countryName: "Moldova", countryCapital: "Chișinău", CountrySize: 33846, countryPopulation: 2591900 },
+  { countryName: "Monaco", countryCapital: "Monaco", CountrySize: 2, countryPopulation: 39242 },
+  { countryName: "Montenegro", countryCapital: "Podgorica", CountrySize: 13812, countryPopulation: 602000 },
+  { countryName: "Netherlands", countryCapital: "Amsterdam", CountrySize: 41850, countryPopulation: 17445781 },
+  { countryName: "North Macedonia", countryCapital: "Skopje", CountrySize: 25713, countryPopulation: 2077132 },
+  { countryName: "Norway", countryCapital: "Oslo", CountrySize: 385207, countryPopulation: 5468800 },
+  { countryName: "Poland", countryCapital: "Warsaw", CountrySize: 312696, countryPopulation: 37950802 },
+  { countryName: "Portugal", countryCapital: "Lisbon", CountrySize: 92090, countryPopulation: 10305564 },
+  { countryName: "Romania", countryCapital: "Bucharest", CountrySize: 238397, countryPopulation: 19286123 },
+  { countryName: "Russia", countryCapital: "Moscow", CountrySize: 17098246, countryPopulation: 144104080 },
+  { countryName: "San Marino", countryCapital: "San Marino", CountrySize: 61, countryPopulation: 33931 },
+  { countryName: "Serbia", countryCapital: "Belgrade", CountrySize: 88361, countryPopulation: 6820000 },
+  { countryName: "Slovakia", countryCapital: "Bratislava", CountrySize: 49035, countryPopulation: 5458162 },
+  { countryName: "Slovenia", countryCapital: "Ljubljana", CountrySize: 20273, countryPopulation: 2100126 },
+  { countryName: "Spain", countryCapital: "Madrid", CountrySize: 505992, countryPopulation: 47450795 },
+  { countryName: "Sweden", countryCapital: "Stockholm", CountrySize: 450295, countryPopulation: 10379295 },
+  { countryName: "Switzerland", countryCapital: "Bern", CountrySize: 41284, countryPopulation: 8654622 },
+  { countryName: "Türkiye", countryCapital: "Ankara", CountrySize: 783356, countryPopulation: 85042770 },
+  { countryName: "Ukraine", countryCapital: "Kyiv", CountrySize: 603628, countryPopulation: 39309700 },
+  { countryName: "United Kingdom", countryCapital: "London", CountrySize: 242495, countryPopulation: 67215293 },
+  { countryName: "Vatican City", countryCapital: "Vatican City", CountrySize: 0.44, countryPopulation: 825 },
+];
+
+router.get("/countries", (req, res) => {
+  res.json(europeanCountries);
+});
+
+module.exports = router;
