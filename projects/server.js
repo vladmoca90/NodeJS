@@ -2,6 +2,7 @@
 
 const countriesRouter = require("./countries");
 const personsRouter = require("./persons");
+const hotelsRouter = require("./hotels/booking");
 
 const app = express();
 const PORT = 3000;
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 // Register route modules
 app.use(countriesRouter);
 app.use(personsRouter);
+app.use(hotelsRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
