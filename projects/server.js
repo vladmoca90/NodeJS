@@ -2,7 +2,7 @@
 
 const countriesRouter = require("./countries");
 const personsRouter = require("./persons");
-const hotelsRouter = require("./hotels/booking");
+const hotelsRouter = require("./hotels");
 
 const app = express();
 const PORT = 3000;
