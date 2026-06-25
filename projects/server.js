@@ -3,6 +3,7 @@
 const countriesRouter = require("./countries");
 const personsRouter = require("./persons");
 const hotelsRouter = require("./hotels");
+const carsRouter = require("./cars");
 
 const app = express();
 const PORT = 3000;
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
 app.use(countriesRouter);
 app.use(personsRouter);
 app.use(hotelsRouter);
+app.use(carsRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
